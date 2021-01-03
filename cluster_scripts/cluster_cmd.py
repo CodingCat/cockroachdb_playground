@@ -3,6 +3,7 @@ import sys
 from bcolors import bcolors
 from cluster_launcher import ClusterLauncher
 from cluster_shutdown import ClusterShutdown
+from cluster_repl import ClusterRepl
 
 start_tcp_port = 22650
 start_http_port = 8080
@@ -30,6 +31,8 @@ if __name__ == "__main__":
                 ClusterLauncher.launch_cluster(int(sys.argv[2]))
         elif sys.argv[1] == "shutdown":
             ClusterShutdown.shutdown_cluster()
+        elif sys.argv[1] == "repl":
+            ClusterRepl.launch_repl()
         elif sys.argv[1] == "help":
             print_help()
         else:
