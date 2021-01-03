@@ -13,4 +13,4 @@ class ClusterRepl:
             s = f"localhost:{line.split(',')[2].strip()}"
             all_nodes.append(s)
         cmd = f"cockroach sql --insecure --host={all_nodes[random.randint(0, len(all_nodes) - 1)]}"
-        print(f"{bcolors.OKGREEN}{cmd}{bcolors.ENDC}")
+        print(f"please copy this command and launch {bcolors.OKGREEN}{cmd}{bcolors.ENDC}")
