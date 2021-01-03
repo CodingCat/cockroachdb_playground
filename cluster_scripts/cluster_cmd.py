@@ -2,13 +2,10 @@ import sys
 
 from bcolors import bcolors
 from cluster_launcher import ClusterLauncher
+from cluster_shutdown import ClusterShutdown
 
 start_tcp_port = 22650
 start_http_port = 8080
-
-
-def shutdown_cluster():
-    print("shutdowning cockroachdb cluster")
 
 
 def print_help():
@@ -32,7 +29,7 @@ if __name__ == "__main__":
             else:
                 ClusterLauncher.launch_cluster(int(sys.argv[2]))
         elif sys.argv[1] == "shutdown":
-            shutdown_cluster()
+            ClusterShutdown.shutdown_cluster()
         elif sys.argv[1] == "help":
             print_help()
         else:

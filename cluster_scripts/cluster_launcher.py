@@ -7,6 +7,8 @@ from bcolors import bcolors
 class ClusterLauncher:
     start_tcp_port = 22650
     start_http_port = 8080
+    crdb_playground_dir = f"{os.path.expanduser('~')}/.cockroach_playground"
+    crdb_launch_record_path = f"{crdb_playground_dir}/launching_record"
 
     @staticmethod
     def __compose_join_str(num_nodes, start_tcp_port):
@@ -18,11 +20,9 @@ class ClusterLauncher:
     # format of file: current working dir, node_id, port number
     @staticmethod
     def __write_launching_records(num_nodes):
-        crdb_playground_dir = f"{os.path.expanduser('~')}/.cockroach_playground"
-        print(crdb_playground_dir)
-        if not os.path.exists(crdb_playground_dir):
-            os.mkdir(crdb_playground_dir)
-        f = open(f"{crdb_playground_dir}/launching_record", "w")
+        if not os.path.exists(ClusterLauncher.crdb_playground_dir):
+            os.mkdir(ClusterLauncher.crdb_playground_dir)
+        f = open(f"{ClusterLauncher.crdb_launch_record_path}", "w")
         cwd = os.getcwd()
         for listen_tcp_port in range(ClusterLauncher.start_tcp_port, ClusterLauncher.start_tcp_port + num_nodes):
             f.write(f"{cwd},node_{listen_tcp_port - ClusterLauncher.start_tcp_port},{listen_tcp_port}\n")
@@ -41,5 +41,5 @@ class ClusterLauncher:
                            f"--background"
             print(f"{bcolors.OKCYAN}{command_line}{bcolors.ENDC}")
             subprocess.Popen(command_line.split(" "))
-        print(f"successfully launched {num_nodes} nodes cockroachdb cluster")
+        print(f"{bcolors.OKGREEN}successfully launched {num_nodes} nodes cockroachdb cluster{bcolors.ENDC}")
         ClusterLauncher.__write_launching_records(num_nodes)
