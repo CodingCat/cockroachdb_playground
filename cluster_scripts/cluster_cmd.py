@@ -1,14 +1,10 @@
-# usage:
-# start a new cluster: python cluster_cmd.py launch num_cluster_nodes
-# shutdown the whole cluster: python cluster_cmd.py shutdown
-
 import sys
 
 from bcolors import bcolors
+from cluster_launcher import ClusterLauncher
 
-
-def launch_cluster(num_nodes):
-    print("launching {0} nodes cockroachdb cluster".format(num_nodes))
+start_tcp_port = 22650
+start_http_port = 8080
 
 
 def shutdown_cluster():
@@ -31,7 +27,10 @@ if __name__ == "__main__":
         unrecognized_usage()
     else:
         if sys.argv[1] == "launch":
-            launch_cluster(int(sys.argv[1]))
+            if len(sys.argv) < 3:
+                print_help()
+            else:
+                ClusterLauncher.launch_cluster(int(sys.argv[2]))
         elif sys.argv[1] == "shutdown":
             shutdown_cluster()
         elif sys.argv[1] == "help":
